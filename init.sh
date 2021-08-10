@@ -25,5 +25,5 @@ for folder in $folders; do
   done
 done
 
-source ~/dotfiles/.zshrc
-source ~/dotfiles/.zpreztorc
+source ${ZDOTDIR:-$HOME}/.zshrc
+source ${ZDOTDIR:-$HOME}/.zpreztorc

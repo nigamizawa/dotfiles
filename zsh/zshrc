@@ -1,0 +1,45 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# Customize to your needs...
+export GOPATH=~/go
+export PATH=$GOPATH/bin:$PATH
+
+# Nodenv init
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init -)"
+
+# Alias
+alias kc=kubectl
+alias tf=terraform
+alias tff='terraform fmt -recursive'
+alias tfw='terraform workspace'
+alias Balus='terraform destroy'
+alias g='git'
+alias src='cd $(ghq root)/$(ghq list | peco)'
+# alias chrepo ='cd $(ghq root)/$(ghq list | peco)'
+alias vsrc='code -n $(ghq root)/$(ghq list | peco)'
+alias dc='docker'
+alias doc='docker-compose'
+alias dcrm='docker rm $(docker ps -aq)'
+alias cdsrc='cd $GOPATH/src'
+
+eval $(thefuck --alias)
+
+zshaddhistory() {
+    local line=${1%%$'\n'}
+    local cmd=${line%% *}
+
+    [[ ${#line} -ge 5
+        && ${cmd} != (terraform destroy|tf destroy|Balus)
+    ]]
+}
